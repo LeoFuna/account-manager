@@ -7,6 +7,6 @@ app.use(express.json())
 const PORT = process.env.PORT || 3000
 
 app.get('/account', accountController.getByCpf)
-app.post('/account', )
+app.post('/account', accountController.create)
 
 app.listen(PORT, () => console.log(`Estou ouvindo a porta ${PORT}`))
