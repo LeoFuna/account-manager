@@ -6,7 +6,7 @@ const getByCpf = async (_req, res) => {
 const create = async (req, res) => {
   const { name, cpf } = req.body
   const createAccountResponse = await accountService.create(name, cpf)
-  res.status(201).json(createAccountResponse)
+  res.status(createAccountResponse.code).json({ payload: createAccountResponse.payload})
 }
 
 module.exports = {
