@@ -24,12 +24,15 @@ const transferAccount = async (userCpf, value, cpfToPay) => {
   if(!accountToPayFound) return { code: statusCode.BAD_REQUEST, payload: { message: 'CPF inválido ou inexistente para transferência' } }
   const accountFound = await accountsModel.getByCpf(userCpf)
   if(accountFound.balance - value < 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Saldo insuficiente!' } }
+  await accountsModel.updateBalance(cpfToPay, accountToPayFound.balance + value)
+  const transferResponse = await accountsModel.updateBalance(userCpf, accountFound.balance - value)
+  return { code: statusCode.OK, payload: transferResponse }
 }
 
 const depositAccount = async (cpf, value) => {
   if(validateDeposit(value)) return validateDeposit(value)
   const accountFound = await accountsModel.getByCpf(cpf)
-  const depositResponse = await accountsModel.addBalance(cpf, accountFound.balance + value)
+  const depositResponse = await accountsModel.updateBalance(cpf, accountFound.balance + value)
   return { code: statusCode.OK, payload: depositResponse }
 }
 

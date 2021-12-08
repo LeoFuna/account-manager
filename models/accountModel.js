@@ -16,7 +16,7 @@ const getByCpf = async (cpf) => {
   return accountFound
 }
 
-const addBalance = async (cpf, newBalance) => {
+const updateBalance = async (cpf, newBalance) => {
   const db = await connection()
   await db.collection('accounts').updateOne({ cpf }, { $set: { balance: newBalance } })
   return {
@@ -28,5 +28,5 @@ const addBalance = async (cpf, newBalance) => {
 module.exports = {
   create,
   getByCpf,
-  addBalance
+  updateBalance
 }

@@ -21,6 +21,7 @@ const validators = {
   validateTransaction: (value) => {
     if(value <= 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Transação deve ser maior do que Zero' } }
     if(!value || value === '') return { code: statusCode.BAD_REQUEST, payload: { message: 'Transação deve ser informada!' } }
+    if(typeof value !== 'number') return { code: statusCode.BAD_REQUEST, payload: { message: 'Só são permitidos números' } }
   },
   validateDeposit: (deposit) => {
     if(deposit <= 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Depósito deve ser maior do que Zero' } }
