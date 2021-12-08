@@ -1,10 +1,10 @@
 const connection = require('./connection')
 
-const create = async (name, cpf) => {
+const create = async (name, cpf, password) => {
   const db = await connection()
-  const createResponse = await db.collection('accounts').insertOne({name, cpf})
+  const createResponse = await db.collection('accounts').insertOne({name, cpf, password})
   return {
-    _id: createResponse._id,
+    _id: createResponse.insertedId,
     name,
     cpf
   }

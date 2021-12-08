@@ -1,4 +1,6 @@
 const accountService = require('./accountService')
+const loginService = require('./loginService')
 module.exports = {
-  accountService
+  accountService,
+  loginService
 }

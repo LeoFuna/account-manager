@@ -10,11 +10,7 @@ const validators = {
     if(!cpf || cpf === '') return { code: statusCode.BAD_REQUEST, payload: 'Cpf deve ser informado.' }
     if(cpf.length !== 11) return { code: statusCode.BAD_REQUEST, payload: 'Cpf inválido.' }
     const accountFound = await accountsModel.getByCpf(cpf)
-    if(accountFound) return { code: statusCode.BAD_REQUEST, payload: 'Cpf já possui conta cadastrada.' }
-  },
-  validatePassword: (password) => {
-    if(!password || password === '') return { code: statusCode.BAD_REQUEST, payload: 'Senha deve ser informada.' }
-    if(password.length < 6) return { code: statusCode.BAD_REQUEST, payload: 'Senha deve ter no mínimo 6 caracteres.' }
+    if(!accountFound) return { code: statusCode.BAD_REQUEST, payload: 'Não existe conta para esse CPF, cadastre-se.' }
   }
 }
 
