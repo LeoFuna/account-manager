@@ -1,9 +1,8 @@
 const { loginValidations } = require('../validations')
 const statusCode = require('../helpers')
 
-const login = async (name, cpf, password) => {
-  const { validateCpf, validateName, validatePassword } = loginValidations.validators
-  if(validateName(name)) return validateName(name)
+const login = async (cpf, password) => {
+  const { validateCpf, validatePassword } = loginValidations.validators
   if(validateCpf(cpf)) return validateCpf(cpf)
   const isNotValidEntries = await validatePassword(password, cpf)
   if(isNotValidEntries) return isNotValidEntries
