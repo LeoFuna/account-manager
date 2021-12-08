@@ -1,13 +1,13 @@
 const { accountValidations } = require('../validations')
 const statusCode = require('../helpers')
 const { accountsModel } = require('../models')
+const { validateCpf, validateName, validatePassword, validateTransaction, validateDeposit } = accountValidations.validators
 
 const create = async (name, cpf, password) => {
-  const { validateCpf, validateName, validatePassword } = accountValidations.validators
   if(validateName(name)) return validateName(name)
   if(validatePassword(password)) return validatePassword(password)
-  const isValidCpf = await validateCpf(cpf)
-  if(isValidCpf) return isValidCpf
+  const isNotValidCpf = await validateCpf(cpf)
+  if(isNotValidCpf) return isNotValidCpf
   const createResponse = await accountsModel.create(name, cpf, password)
   return { code: statusCode.CREATED, payload: createResponse }
 }
@@ -17,7 +17,25 @@ const getByCpf = async (cpf) => {
   return { code: statusCode.OK, payload: accountInfo }
 }
 
+const transferAccount = async (userCpf, value, cpfToPay) => {
+  if (await validateCpf(cpfToPay, true)) return await validateCpf(cpfToPay, true)
+  if (validateTransaction(value)) return validateTransaction(value)
+  const accountToPayFound = await accountsModel.getByCpf(cpfToPay)
+  if(!accountToPayFound) return { code: statusCode.BAD_REQUEST, payload: { message: 'CPF inválido ou inexistente para transferência' } }
+  const accountFound = await accountsModel.getByCpf(userCpf)
+  if(accountFound.balance - value < 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Saldo insuficiente!' } }
+}
+
+const depositAccount = async (cpf, value) => {
+  if(validateDeposit(value)) return validateDeposit(value)
+  const accountFound = await accountsModel.getByCpf(cpf)
+  const depositResponse = await accountsModel.addBalance(cpf, accountFound.balance + value)
+  return { code: statusCode.OK, payload: depositResponse }
+}
+
 module.exports = {
   create,
-  getByCpf
+  getByCpf,
+  transferAccount,
+  depositAccount
 }
