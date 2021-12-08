@@ -1,6 +1,8 @@
 const { accountService } = require('../services')
-const getByCpf = async (_req, res) => {
-  res.status(200).json({ messsage: 'Contas recebida' })
+const getByCpf = async (req, res) => {
+  const { userInfo } = req.body
+  const getResponse = await accountService.getByCpf(userInfo.cpf)
+  res.status(getResponse.code).json(getResponse.payload)
 }
 
 const create = async (req, res) => {
