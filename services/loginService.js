@@ -1,11 +1,13 @@
 const { loginValidations } = require('../validations')
 const statusCode = require('../helpers')
 
-const login = async (name, cpf) => {
-  if(loginValidations.validators.validateName(name)) return loginValidations.validators.validateName(name)
-  const isNotValidCpf = await loginValidations.validators.validateCpf(cpf)
-  if(isNotValidCpf) return isNotValidCpf
-  return { code: statusCode.CREATED, payload: { message: 'Login feito com sucesso' } }
+const login = async (name, cpf, password) => {
+  const { validateCpf, validateName, validatePassword } = loginValidations.validators
+  if(validateName(name)) return validateName(name)
+  if(validateCpf(cpf)) return validateCpf(cpf)
+  const isNotValidEntries = await validatePassword(password, cpf)
+  if(isNotValidEntries) return isNotValidEntries
+  return { code: statusCode.OK, payload: { message: 'Login feito com sucesso' } }
 }
 
 module.exports = {
