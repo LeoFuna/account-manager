@@ -23,8 +23,9 @@ const validators = {
     if(!value || value === '') return { code: statusCode.BAD_REQUEST, payload: { message: 'Transação deve ser informada!' } }
   },
   validateDeposit: (deposit) => {
-    if(deposit <= 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Despósito deve ser maior do que Zero' } }
+    if(deposit <= 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Depósito deve ser maior do que Zero' } }
     if(!deposit || deposit === '') return { code: statusCode.BAD_REQUEST, payload: { message: 'Depósito deve ser informado!' } }
+    if(typeof deposit !== 'number') return { code: statusCode.BAD_REQUEST, payload: { message: 'Só são permitidos números' } }
     if(deposit > 2000) return { code: statusCode.BAD_REQUEST, payload: { message: 'São aceitos depósitos de até R$ 2.000,00!' } }
   }
 }
