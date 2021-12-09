@@ -36,6 +36,14 @@ describe('Valida depósito em conta', () => {
     })
 
     await frisby
+    .post(`${url}/account`, {
+      name: 'Usuario Teste 2',
+      cpf: '22222222222',
+      password: '123456'
+    })
+    .expect('status', 201)
+
+    await frisby
     .post(`${url}/login`, results)
     .expect('status', 200)
     .then((response) => {
@@ -52,8 +60,7 @@ describe('Valida depósito em conta', () => {
     await connection.close();
   });
 
-  it('Será validado que é possível fazer um depósito em conta estando logado', async () => { 
-    //https://github.com/vlucas/frisby/issues/523
+  it('Será validado que é possível fazer uma transferência entre 2 contas existentes', async () => {
     await frisby.setup({
       request: {
         headers: {
@@ -63,72 +70,84 @@ describe('Valida depósito em conta', () => {
     })
     .put(`${url}/account/deposit`, { value: 100 })
     .expect('status', 200)
+
+    await frisby.setup({
+      request: {
+        headers: {
+          authorization: token
+        }
+      }
+    })
+    .put(`${url}/account/transfer`, { value: 50, cpfToPay: '22222222222' })
+    .expect('status', 200)
     .then((result) => {
       const { json } = result
       expect(json.cpf).toBe('11111111111')
+      expect(json.balance).toBe(50)
+    })
+
+    await frisby
+    .post(`${url}/login`, { cpf: '22222222222', password: '123456' })
+    .expect('status', 200)
+    .then((response) => {
+      const { json } = response
+      token = json.token
+    })
+
+    await frisby.setup({
+      request: {
+        headers: {
+          authorization: token
+        }
+      }
+    })
+    .get(`${url}/account`)
+    .expect('status', 200)
+    .then((response) => {
+      const { json } = response
+      expect(json.cpf).toBe('22222222222')
+      expect(json.balance).toBe(50)
+    })
+  })
+
+  it('Será validado que não é possível fazer uma transferência ficando com saldo negativo', async () => {
+    await frisby.setup({
+      request: {
+        headers: {
+          authorization: token
+        }
+      }
+    })
+    .put(`${url}/account/deposit`, { value: 100 })
+    .expect('status', 200)
+
+    await frisby.setup({
+      request: {
+        headers: {
+          authorization: token
+        }
+      }
+    })
+    .put(`${url}/account/transfer`, { value: 101, cpfToPay: '22222222222' })
+    .expect('status', 400)
+    .then((result) => {
+      const { json } = result
+      expect(json.message).toBe('Saldo insuficiente!')
+    })
+
+    await frisby.setup({
+      request: {
+        headers: {
+          authorization: token
+        }
+      }
+    })
+    .get(`${url}/account`)
+    .expect('status', 200)
+    .then((response) => {
+      const { json } = response
+      expect(json.cpf).toBe('11111111111')
       expect(json.balance).toBe(100)
-    })
-  })
-
-  it('Será validado que não é possível fazer um depósito maior do que R$ 2.000,00', async () => {
-    await frisby.setup({
-      request: {
-        headers: {
-          authorization: token
-        }
-      }
-    })
-    .put(`${url}/account/deposit`, { value: 2001 })
-    .expect('status', 400)
-    .then((result) => {
-      const { json } = result
-      expect(json.message).toBe('São aceitos depósitos de até R$ 2.000,00!')
-    })
-  })
-
-  it('Será validado que não é possível fazer depósitos de R$ 0 ou negativos', async () => {
-    await frisby.setup({
-      request: {
-        headers: {
-          authorization: token
-        }
-      }
-    })
-    .put(`${url}/account/deposit`, { value: 0 })
-    .expect('status', 400)
-    .then((result) => {
-      const { json } = result
-      expect(json.message).toBe('Depósito deve ser maior do que Zero')
-    })
-
-    await frisby.setup({
-      request: {
-        headers: {
-          authorization: token
-        }
-      }
-    })
-    .put(`${url}/account/deposit`, { value: -20 })
-    .expect('status', 400)
-    .then((result) => {
-      const { json } = result
-      expect(json.message).toBe('Depósito deve ser maior do que Zero')
-    })
-  })
-
-  it('Será validado que não é possível fazer depósito sem valor definido', async () => {
-    await frisby.setup({
-      request: {
-        headers: {
-          authorization: token
-        }
-      }
-    })
-    .put(`${url}/account/deposit`)
-    .expect('status', 400)
-    .then((result) => {
-      const { json } = result
-      expect(json.message).toBe('Depósito deve ser informado!')
     })
   })
 })
