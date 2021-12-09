@@ -22,6 +22,7 @@ const transferAccount = async (userCpf, value, cpfToPay) => {
   if (validateTransaction(value)) return validateTransaction(value)
   const accountToPayFound = await accountsModel.getByCpf(cpfToPay)
   if(!accountToPayFound) return { code: statusCode.BAD_REQUEST, payload: { message: 'CPF inválido ou inexistente para transferência' } }
+  if(accountToPayFound.cpf === userCpf) return { code: statusCode.BAD_REQUEST, payload: { message: 'Não é possível transferir para si mesmo.' } }
   const accountFound = await accountsModel.getByCpf(userCpf)
   if(accountFound.balance - value < 0) return { code: statusCode.BAD_REQUEST, payload: { message: 'Saldo insuficiente!' } }
   await accountsModel.updateBalance(cpfToPay, accountToPayFound.balance + value)
