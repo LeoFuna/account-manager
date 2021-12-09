@@ -8,6 +8,7 @@ Olá seja bem vindo(a) ao meu projeto Account Manager, projeto é uma API de ger
 
 - [Habilidades treinadas](#habilidades-treinadas)
 - [Instruções para acessar o projeto](#instruções-para-acessar-o-projeto)
+- [A aplicação](#a-aplicação)
 
 
 # Habilidades treinadas
@@ -48,6 +49,53 @@ Olá seja bem vindo(a) ao meu projeto Account Manager, projeto é uma API de ger
     *  Pega os dados de uma conta: `/account [GET]` Obs: Necessita estar logado
 
 ---
+
+# A aplicação
+
+### 1. Criando nova conta
+Exemplo de um corpo para criar nova conta.
+<br>
+![body_da criacao](./images/createAccBody.png)
+<br>
+Exemplo da resposta recebida.
+<br>
+![response_da_criacao](./images/createAcc.png)
+<br><br>
+### 2. Fazendo login na conta
+Exemplo de um corpo para login.
+<br>
+![body_do_login](./images/loginBody.png)
+<br>
+Exemplo da resposta recebida.
+<br>
+![response_do_login](./images/login.png)
+<br><br>
+### !!! Próximas respostas necessitam sempre do token no Header conforme abaixo !!!
+![header_authorization](./images/getAccHeader.png)
+<br><br>
+### 3. Pegando todos os dados de uma conta
+Exemplo da resposta recebida.
+<br>
+![body_getByCpf](./images/getAccData.png)
+<br><br>
+### 4. Depositando na conta
+Exemplo de corpo para depositar em conta.
+<br>
+![body_deposit](./images/depositBody.png)
+<br>
+Exemplo da resposta recebida.
+<br>
+![response_deposit](./images/depositAcc.png)
+<br><br>
+### 5. Transferindo entre contas
+Exemplo de corpo para transferência entre contas.
+<br>
+![body_transfer](./images/transferAccBody.png)
+<br>
+Exemplo da resposta recebida.
+<br>
+![response_transfer](./images/transferAcc.png)
+<br><br>
 
 # Desafio de Backend
 
