@@ -36,8 +36,10 @@ Olá seja bem vindo(a) ao meu projeto Account Manager, projeto é uma API de ger
 4. Inicie a aplicação:
   * `npm start`
 
-5. Agora utilize alguma ferramenta para testar endpoints de APIs.
-  * [Sugestão Insomnia](https://insomnia.rest/download)
+5. Crie um arquivo .env na raiz da aplicação e insira os dados baseando-se no modelo .model.env
+
+6. Agora utilize alguma ferramenta para testar endpoints de APIs.
+  * [Sugestão: Insomnia](https://insomnia.rest/download)
   * Os endpoints disponíveis são:
     *  Cria uma nova conta: `/account [POST]`
     *  Faz login em conta: `/login [POST]`
@@ -49,29 +51,6 @@ Olá seja bem vindo(a) ao meu projeto Account Manager, projeto é uma API de ger
 
 # Desafio de Backend
 
-
-
-Seu **objetivo** é **criar uma API REST** com algumas **funções essenciais relacionadas** ao **gerenciamento de contas bancárias** em **uma** das linguagem: **Java, Kotlin, Python, Node.js, .NET**
-
-- Para abrir uma conta é necessário apenas o nome completo e CPF da pessoa, mas só é permitido uma conta por pessoa;
-- Com essa conta é possível realizar transferências para outras contas e depositar;
-- Não aceitamos valores negativos nas contas;
-- Por questão de segurança cada transação de depósito não pode ser maior do que R$2.000;
-- As transferências entre contas são gratuitas e ilimitadas;
-
-Em relação a **banco de dados**, **quem decide é você mesmo**.
-
-Por favor, não esquecer de adicionar no README as instruções de como executar o projeto.
-
-## O que avaliamos?
-
-- Performance
-- Testes
-- Manutenabilidade
-- Princípios de programação
-- Arquitetura de Software
-
-## Como entregar?
 
 Não faça um fork desse projeto, crie um repositório no seu perfil do GitHub. Pode criar privado mesmo, sem problemas.
 Assim que terminar é só compartilhar o código com nosso usuário [devdigitalrepublic](https://github.com/devdigitalrepublic) e entrar em contato com a gente.
