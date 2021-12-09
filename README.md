@@ -96,11 +96,3 @@ Exemplo da resposta recebida.
 <br>
 ![response_transfer](./images/transferAcc.png)
 <br><br>
-
-# Desafio de Backend
-
-
-Não faça um fork desse projeto, crie um repositório no seu perfil do GitHub. Pode criar privado mesmo, sem problemas.
-Assim que terminar é só compartilhar o código com nosso usuário [devdigitalrepublic](https://github.com/devdigitalrepublic) e entrar em contato com a gente.
-
-Boa sorte e divirta-se! ;)
