@@ -48,6 +48,9 @@ Olá seja bem vindo(a) ao meu projeto Account Manager, projeto é uma API de ger
     *  Realiza transferência entre contas: `/account/transfer [PUT]` Obs: Necessita estar logado
     *  Pega os dados de uma conta: `/account [GET]` Obs: Necessita estar logado
 
+### OBS: Para rodar os testes basta estar com a aplicação rodando e digitando o comando:
+  * `npm test`
+
 ---
 
 # A aplicação
