@@ -34,10 +34,10 @@ Olá seja bem vindo(a) ao meu projeto Account Manager, projeto é uma API de ger
   * Caso não tenha instalado, instale-o.
     * [Página para Instalação](https://docs.mongodb.com/manual/installation/)
 
-4. Inicie a aplicação:
-  * `npm start`
+4. Crie um arquivo .env na raiz da aplicação e insira os dados baseando-se no modelo .model.env
 
-5. Crie um arquivo .env na raiz da aplicação e insira os dados baseando-se no modelo .model.env
+5. Inicie a aplicação:
+  * `npm start`
 
 6. Agora utilize alguma ferramenta para testar endpoints de APIs.
   * [Sugestão: Insomnia](https://insomnia.rest/download)
